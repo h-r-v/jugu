@@ -107,3 +107,19 @@ button {
     opacity: 0;
   }
 }
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  opacity: 0.9;
+  animation: confetti-fly linear forwards;
+}
+
+@keyframes confetti-fly {
+  to {
+    transform: translate(var(--x), var(--y)) rotate(720deg);
+    opacity: 0;
+  }
+}

@@ -62,7 +62,7 @@ function activateNoEvasion() {
   noBtn.addEventListener("click", e => e.preventDefault());
 }
 
-/* TOAST MESSAGE */
+/* TOAST */
 function showToast(text) {
   const toast = document.createElement("div");
   toast.textContent = text;
@@ -83,6 +83,7 @@ function showToast(text) {
 /* YES BUTTON — CELEBRATION */
 yesBtn.addEventListener("click", () => {
   launchHearts();
+  launchConfetti();
 
   setTimeout(() => {
     app.innerHTML = `
@@ -109,4 +110,33 @@ function launchHearts() {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 5000);
   }
+}
+
+/* CONFETTI CANNONS */
+function launchConfetti() {
+  const colors = ["#ff5c8a", "#ffd1dc", "#ffb3c6", "#fff"];
+
+  for (let i = 0; i < 60; i++) {
+    createConfetti(20, window.innerHeight - 20, 1, colors);
+    createConfetti(window.innerWidth - 20, window.innerHeight - 20, -1, colors);
+  }
+}
+
+function createConfetti(x, y, direction, colors) {
+  const confetti = document.createElement("div");
+  confetti.className = "confetti";
+  confetti.style.left = x + "px";
+  confetti.style.top = y + "px";
+  confetti.style.background =
+    colors[Math.floor(Math.random() * colors.length)];
+
+  const xMove = direction * (Math.random() * 300 + 100);
+  const yMove = -(Math.random() * 400 + 200);
+
+  confetti.style.setProperty("--x", xMove + "px");
+  confetti.style.setProperty("--y", yMove + "px");
+  confetti.style.animationDuration = Math.random() * 1.5 + 1 + "s";
+
+  document.body.appendChild(confetti);
+  setTimeout(() => confetti.remove(), 3000);
 }
