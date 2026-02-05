@@ -1,84 +1,97 @@
-:root{
+* {
+  box-sizing: border-box;
 }
 
-
-.buttons{display:flex;gap:16px;align-items:center;justify-content:center}
-.btn{
-cursor:pointer;border:0;padding:12px 20px;border-radius:12px;font-size:18px;
-box-shadow:0 6px 14px rgba(120,40,80,0.12);transition:transform .18s ease, box-shadow .18s ease;
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #ffe6ee, #fff0f5);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-
-.btn:active{transform:scale(.98)}
-
-
-.yes{
-background:linear-gradient(180deg,var(--accent),var(--accent-2));
-color:white;font-weight:700;letter-spacing:0.6px;
+#app {
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  max-width: 500px;
 }
 
-
-.no{
-background:transparent;border:2px dashed rgba(120,40,80,0.12);color:var(--muted);font-weight:700;
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 24px;
 }
 
-
-.hint{margin-top:10px;color:var(--muted);font-size:13px}
-
-
-.footer{margin-top:18px;color:var(--muted);font-size:13px;z-index:1}
-
-
-/* Overlay */
-.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);z-index:20}
-.hidden{display:none}
-.loaderBox{background:linear-gradient(180deg,#fff,#fff0);padding:28px;border-radius:14px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 12px 40px rgba(91,27,64,0.12)}
-.spinner{width:56px;height:56px;border-radius:50%;border:6px solid rgba(255,111,148,0.15);border-top-color:var(--accent);animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loaderText{font-weight:700;color:#6b3b4b}
-
-
-/* hearts animation */
-.heart{
-position:fixed;pointer-events:none;z-index:30;will-change:transform,opacity;
-width:28px;height:28px;background:radial-gradient(circle at 30% 30%, #fff, transparent 15%),linear-gradient(135deg,#ff6b9a,#ff4d6d);
-transform:rotate(-45deg);
-border-radius:6px;
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
-.heart:before,.heart:after{content:'';position:absolute;background:inherit;border-radius:50%;width:28px;height:28px}
-.heart:before{top:-14px;left:0}
-.heart:after{left:14px;top:0}
 
+button {
+  padding: 14px 24px;
+  font-size: 18px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff5c8a;
+  color: white;
+}
+
+#noBtn {
+  background: transparent;
+  border: 2px dashed #ff5c8a;
+  color: #444;
+  position: relative;
+}
+
+/* Loader */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* IMPORTANT FIX */
+#loader.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ffd1dc;
+  border-top-color: #ff5c8a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hearts */
+.heart {
+  position: fixed;
+  font-size: 24px;
+  animation: fall linear forwards;
+}
 
 @keyframes fall {
-to{ transform: translateY(120vh) rotate(360deg) scale(.5); opacity:0 }
-}
-
-
-/* confetti */
-.confetti{position:fixed;z-index:29;pointer-events:none;width:10px;height:10px;border-radius:2px;opacity:0.95}
-@keyframes confettiFall{to{transform:translateY(120vh) rotate(600deg);opacity:0}}
-
-
-/* toast messages */
-.toasts{position:fixed;right:14px;top:14px;z-index:40;display:flex;flex-direction:column;gap:8px}
-.toast{background:rgba(255,255,255,0.9);padding:8px 12px;border-radius:10px;box-shadow:0 6px 18px rgba(91,27,64,0.08);font-weight:700}
-
-
-/* playful button behavior helpers */
-.btn.running{position:fixed;transition:transform .18s ease,left .18s ease,top .18s ease}
-
-
-/* confirmation screen */
-.confirm{
-padding:36px 22px;text-align:center;z-index:25
-}
-.confirm h2{font-size:22px;margin:0 0 12px 0}
-.confirm p{margin:0 0 8px 0}
-
-
-/* responsive tweaks */
-@media (max-width:420px){
-.btn{font-size:16px;padding:10px 14px}
-.headline{font-size:18px}
+  to {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
 }

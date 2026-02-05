@@ -1,99 +1,97 @@
-/*
-jumpNoButton(messages[Math.floor(rand(0, messages.length))]);
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const loader = document.getElementById("loader");
+const loaderText = document.getElementById("loaderText");
+const app = document.getElementById("app");
+
+let noClickedOnce = false;
+
+/* NO BUTTON — FIRST CLICK PRANK */
+noBtn.addEventListener("click", () => {
+  if (noClickedOnce) return;
+
+  noClickedOnce = true;
+  loader.classList.remove("hidden");
+
+  const delay = Math.floor(Math.random() * 3000) + 5000; // 5–8 seconds
+
+  setTimeout(() => {
+    loaderText.textContent = "PSYCH 😏";
+
+    setTimeout(() => {
+      loader.classList.add("hidden");
+      activateNoEvasion();
+    }, 1500);
+  }, delay);
 });
 
+/* NO BUTTON — RUN AWAY MODE */
+function activateNoEvasion() {
+  const messages = [
+    "Nice try 😌",
+    "Not happening 😘",
+    "Wahe guruji already decided"
+  ];
 
-// occasional teasing micro-jumps every few seconds
-setInterval(() => {
-if (!document.body.contains(noBtn)) return;
-if (Math.random() < 0.45) {
-const msg = messages[Math.floor(rand(0, messages.length))];
-jumpNoButton(msg);
+  noBtn.addEventListener("mouseenter", () => {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+    noBtn.style.transform = "scale(" + (Math.random() * 0.6 + 0.7) + ")";
+
+    showToast(messages[Math.floor(Math.random() * messages.length)]);
+  });
+
+  noBtn.addEventListener("click", e => e.preventDefault());
 }
-}, 2500);
+
+/* TOAST MESSAGE */
+function showToast(text) {
+  const toast = document.createElement("div");
+  toast.textContent = text;
+  toast.style.position = "fixed";
+  toast.style.top = "20px";
+  toast.style.right = "20px";
+  toast.style.background = "white";
+  toast.style.padding = "10px 14px";
+  toast.style.borderRadius = "12px";
+  toast.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
+  toast.style.fontWeight = "600";
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 1800);
 }
 
+/* YES BUTTON — CELEBRATION */
+yesBtn.addEventListener("click", () => {
+  launchHearts();
 
-// YES button logic: heart-rain, confetti, and final confirmation screen
-yesBtn.addEventListener('click', async () => {
-// run the celebration
-celebrate();
-
-
-// replace content after a short delay with the confirmation message
-setTimeout(() => showConfirmation(), 1800);
+  setTimeout(() => {
+    app.innerHTML = `
+      <h1>Congratulations! 💘</h1>
+      <p>Your date with your beba is officially confirmed 🥰</p>
+      <p>I love you ❤️</p>
+      <p style="margin-top:16px;">
+        Movie + food + you = my perfect Valentine’s Day 💕
+      </p>
+    `;
+  }, 1500);
 });
 
+/* HEART RAIN */
+function launchHearts() {
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-30px";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
-function celebrate() {
-// create hearts
-const number = 24;
-for (let i = 0; i < number; i++) createFallingHeart();
-
-
-// create confetti
-for (let i = 0; i < 40; i++) createConfettiPiece();
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }
 }
-
-
-function createFallingHeart() {
-const el = document.createElement('div');
-el.className = 'heart';
-const size = rand(18, 44);
-el.style.width = size + 'px';
-el.style.height = size + 'px';
-el.style.left = rand(6, window.innerWidth - size - 6) + 'px';
-el.style.top = -rand(40, 120) + 'px';
-el.style.opacity = rand(.8, 1);
-const duration = rand(2500, 6000);
-el.style.animation = `fall ${duration}ms linear forwards`;
-el.style.transform = `rotate(${rand(-200, 200)}deg)`;
-document.body.appendChild(el);
-setTimeout(() => el.remove(), duration + 800);
-}
-
-
-function createConfettiPiece() {
-const el = document.createElement('div');
-el.className = 'confetti';
-const size = Math.floor(rand(6, 12));
-el.style.width = size + 'px';
-el.style.height = size + 'px';
-el.style.left = rand(6, window.innerWidth - size - 6) + 'px';
-el.style.top = -rand(10, 200) + 'px';
-el.style.background = `linear-gradient(45deg, hsl(${rand(330, 360)},80%,65%), hsl(${rand(0, 30)},90%,65%))`;
-el.style.animation = `confettiFall ${rand(2000, 4800)}ms linear forwards`;
-document.body.appendChild(el);
-setTimeout(() => el.remove(), 5200);
-}
-
-
-function showConfirmation() {
-// clear main content and show romantic message
-document.body.querySelector('.page').innerHTML = `
-<div class="confirm">
-<h2>Congratulations! 💘</h2>
-<p>Your date with your beba is officially confirmed 🥰</p>
-<p>I love you ❤️</p>
-<p class="sub">Movie + food + you = my perfect Valentine\'s Day 💕</p>
-</div>
-`;
-}
-
-
-// Small UX nicety: clicking anywhere near YES triggers a small heart pulse
-yesBtn.addEventListener('mouseenter', () => showToast('Yesss 💕', 800));
-
-
-// Accessibility: allow keyboard answers
-document.addEventListener('keydown', (e) => {
-if (e.key === 'y' || e.key === 'Y') yesBtn.click();
-if ((e.key === 'n' || e.key === 'N') && !noLocked) noBtn.click();
-});
-
-
-// Prevent accidental selection while running
-window.addEventListener('selectstart', (e) => { if (noLocked) e.preventDefault(); });
-
-
-// --- End of script.js ---
