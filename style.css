@@ -39,11 +39,17 @@ button {
   border-radius: 14px;
   border: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 #yesBtn {
   background: #ff5c8a;
   color: white;
+}
+
+#yesBtn.super-yes {
+  transform: scale(1.4);
+  animation: pulse 1s infinite;
 }
 
 #noBtn {
@@ -64,7 +70,6 @@ button {
   justify-content: center;
 }
 
-/* IMPORTANT FIX */
 #loader.hidden {
   display: none;
 }
@@ -80,6 +85,13 @@ button {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* YES pulse */
+@keyframes pulse {
+  0% { transform: scale(1.3); }
+  50% { transform: scale(1.45); }
+  100% { transform: scale(1.3); }
 }
 
 /* Hearts */
