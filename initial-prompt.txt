@@ -1,0 +1,39 @@
+VALENTINE'S DAY WEBSITE - FIX & EXTEND
+You are an expert front-end developer. I want you to FIX and EXTEND an existing Valentine's Day website.
+CRITICAL RULES:
+* Do NOT hallucinate
+* Do NOT remove features unless explicitly told
+* Do NOT introduce frameworks, libraries, CDNs, fonts, or external assets
+* Everything must work fully offline by opening index.html locally
+* Use only HTML, CSS, and vanilla JavaScript
+OUTPUT FORMAT (MANDATORY):
+Output THREE separate code blocks, one for each file, in this EXACT format:
+bash
+
+cat << 'EOF' > index.html
+(FULL FILE CONTENT)
+EOF
+bash
+
+cat << 'EOF' > style.css
+(FULL FILE CONTENT)
+EOF
+bash
+
+cat << 'EOF' > script.js
+(FULL FILE CONTENT)
+EOF
+Each code block must be independently copy-pastable into terminal. No explanations between blocks.
+CHANGES REQUIRED:
+1. Reduce fake loading time:
+   * Current: Random 5–8 seconds
+   * New: Exactly 4 seconds (fixed, not random)
+2. Make "PSYCH 😏" dramatically stand out:
+   * Large bold text
+   * High-contrast color
+   * Scale/pop animation
+   * Glow effect
+   * Must be visually striking but still playful
+   * Do NOT break existing behavior
+KEEP EVERYTHING ELSE THE SAME - all other functionality must remain identical.
+CURRENT CODE:

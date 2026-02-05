@@ -7,6 +7,7 @@ const app = document.getElementById("app");
 let noClickedOnce = false;
 let dodgeCount = 0;
 const MAX_DODGES = 15;
+let activeToast = null;
 
 /* FIRST NO CLICK — FAKE LOADER */
 noBtn.addEventListener("click", () => {
@@ -15,13 +16,16 @@ noBtn.addEventListener("click", () => {
   noClickedOnce = true;
   loader.classList.remove("hidden");
 
-  const delay = Math.floor(Math.random() * 3000) + 5000;
+  const delay = Math.random() * 500 + 2500;
 
   setTimeout(() => {
     loaderText.textContent = "PSYCH 😏";
+    loaderText.classList.add("psych");
 
     setTimeout(() => {
       loader.classList.add("hidden");
+      loaderText.classList.remove("psych");
+      loaderText.textContent = "Loading...";
       activateNoEvasion();
     }, 1500);
   }, delay);
@@ -32,7 +36,22 @@ function activateNoEvasion() {
   const messages = [
     "Nice try 😌",
     "Not happening 😘",
-    "Wahe guruji already decided"
+    "Wahe guruji already decided",
+    "Nope! 🙅‍♀️",
+    "Keep dreaming 💭",
+    "Try again 😏",
+    "Still no 😤",
+    "Seriously? 🤨",
+    "Not today 💅",
+    "You wish! 😆",
+    "Nah 😏",
+    "No way 🚫",
+    "Dream on 🌙",
+    "Not a chance 🙄",
+    "Absolutely not 😤",
+    "Good effort though 😅",
+    "Maybe in another life 👻",
+    "Hahaha no 🤣"
   ];
 
   noBtn.addEventListener("mouseenter", dodge);
@@ -64,20 +83,26 @@ function activateNoEvasion() {
 
 /* TOAST */
 function showToast(text) {
-  const toast = document.createElement("div");
-  toast.textContent = text;
-  toast.style.position = "fixed";
-  toast.style.top = "20px";
-  toast.style.right = "20px";
-  toast.style.background = "white";
-  toast.style.padding = "10px 14px";
-  toast.style.borderRadius = "12px";
-  toast.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
-  toast.style.fontWeight = "600";
-  toast.style.zIndex = "999";
+  if (activeToast) {
+    activeToast.remove();
+    activeToast = null;
+  }
 
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = text;
+
+  activeToast = toast;
   document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 1800);
+  
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.remove();
+    }
+    if (activeToast === toast) {
+      activeToast = null;
+    }
+  }, 1800);
 }
 
 /* YES BUTTON — CELEBRATION */
@@ -91,7 +116,7 @@ yesBtn.addEventListener("click", () => {
       <p>Your date with your beba is officially confirmed 🥰</p>
       <p>I love you ❤️</p>
       <p style="margin-top:16px;">
-        Movie + food + you = my perfect Valentine’s Day 💕
+        Movie + food + you = my perfect Valentine's Day 💕
       </p>
     `;
   }, 1500);
